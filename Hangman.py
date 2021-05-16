@@ -1,9 +1,14 @@
+import os
+
+
 def game():
+    os.system("clear")
+
     # asking if the user want to play again
     def play_again():
         answer = input("Do you want to play again ?\n")
         if answer.lower() == "yes":
-            clear(100)
+            os.system("clear")
             game()
         elif answer.lower() == "no":
             print("\nHope you had fun !\n\nEnd of the game.")
@@ -14,16 +19,10 @@ def game():
     # getting the word the user want his friend to discover
     def get_word():
         word_input = input(
-            'Write down the word that needs to be discovered without the other one seeing it !\n'
-            '**Remember it needs to be in lowercase**\n').lower()
+            'Write down the word that needs to be discovered without the other person seeing it !\n').lower()
         return word_input
 
     word = get_word()
-
-    # Function to clear some lines
-    def clear(lines):
-        for i in range(lines + 1):
-            print()
 
     # Start of the game, rules
     def game_initializer():
@@ -33,7 +32,7 @@ isn't part of the word you will lose a life.
 The word have {len(word)} letters.
 Good luck !\n\n""")
 
-    clear(100)
+    os.system("clear")
     game_initializer()
 
     lives_remaining = 5
@@ -50,16 +49,13 @@ Good luck !\n\n""")
     # Print every letters the user already have tried
     def letters_chosen_print():
         if letters_chosen == "":
-            print("You haven't tried any letter yet")
-            clear(2)
+            print("You haven't tried any letter yet\n\n")
         else:
-            print(f"Here's every letters you already tried :\n {letters_chosen}")
-            clear(2)
+            print(f"Here's every letters you already tried :\n {letters_chosen}\n\n")
 
     # Print what the user already have discover about the word
     def current_word_progress_print():
-        print(current_word_progress)
-        clear(1)
+        print(current_word_progress, '\n')
 
     # Each time the user try a new letter, it will be added with this function
     def change_letters_chosen(letter_input):
@@ -81,11 +77,6 @@ Good luck !\n\n""")
         new_current_word_progress = "".join(new_current_word_progress)
         return new_current_word_progress
 
-    # Each time the user guess wrong, it will remove one life with this function
-    def change_lives_remaining():
-        new_lives_remaining = lives_remaining - 1
-        return new_lives_remaining
-
     # This function print everything that the user need to know before guessing again
     def action():
         lives_print()
@@ -95,13 +86,14 @@ Good luck !\n\n""")
     # This loop until the user win or lose
     while lives_remaining > 0 and "_" in current_word_progress:
         action()
-        letter = input("Which letter do you want to pick ?\n")
-        letters_chosen = change_letters_chosen(letter)
-        if letter in word:
-            current_word_progress = change_current_word_progress(letter)
-        else:
-            lives_remaining = change_lives_remaining()
-        clear(100)
+        letter = input("Which letter do you want to pick ?\n\n")
+        if len(letter) == 1 and letter not in list(letters_chosen):
+            letters_chosen = change_letters_chosen(letter)
+            if letter in word:
+                current_word_progress = change_current_word_progress(letter)
+            else:
+                lives_remaining -= 1
+        os.system("clear")
 
     # If the user lose
     if lives_remaining == 0:
@@ -113,7 +105,7 @@ Maybe you can try again.""")
     # If the user win
     if "_" not in current_word_progress:
         print(f"""You win !!!
-You successfully find the word \"{word}\" !
+You successfully found the word \"{word}\" !
 Maybe you could try and win another game.""")
         play_again()
 
