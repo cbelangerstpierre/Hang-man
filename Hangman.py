@@ -1,4 +1,5 @@
 import os
+import string
 
 
 def game():
@@ -12,6 +13,7 @@ def game():
             game()
         elif answer.lower() == "no":
             print("\nHope you had fun !\n\nEnd of the game.")
+            quit()
         else:
             print("\n\nPlease answer by yes or no")
             play_again()
@@ -20,6 +22,13 @@ def game():
     def get_word():
         word_input = input(
             'Write down the word that needs to be discovered without the other person seeing it !\n').lower()
+        if len(word_input) == 0:
+            game()
+        elif word_input == "quit":
+            quit()
+        for each_letter in word_input:
+            if each_letter not in string.ascii_lowercase[:26]:
+                game()
         return word_input
 
     word = get_word()
@@ -87,7 +96,9 @@ Good luck !\n\n""")
     while lives_remaining > 0 and "_" in current_word_progress:
         action()
         letter = input("Which letter do you want to pick ?\n\n")
-        if len(letter) == 1 and letter not in list(letters_chosen):
+        if letter == "quit":
+            quit()
+        elif len(letter) == 1 and letter not in list(letters_chosen) and letter in string.ascii_lowercase[:26]:
             letters_chosen = change_letters_chosen(letter)
             if letter in word:
                 current_word_progress = change_current_word_progress(letter)
