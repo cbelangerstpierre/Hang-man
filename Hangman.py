@@ -60,7 +60,7 @@ Good luck !\n\n""")
         if letters_chosen == "":
             print("You haven't tried any letter yet\n\n")
         else:
-            print(f"Here's every letters you already tried :\n {letters_chosen}\n\n")
+            print(f"Here's every letters you already tried :\n{letters_chosen}\n\n")
 
     # Print what the user already have discover about the word
     def current_word_progress_print():
